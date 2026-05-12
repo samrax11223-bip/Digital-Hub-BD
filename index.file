@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Hub BD | প্রিমিয়াম ডিজিটাল শপ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+        body { font-family: 'Hind Siliguri', sans-serif; }
+        .gradient-text { background: linear-gradient(90deg, #00C9FF, #92FE9D, #FC466B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .product-card { transition: all 0.3s ease; border: 1px solid #f0f0f0; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-color: #3b82f6; }
+        .category-title { border-left: 5px solid #3b82f6; padding-left: 12px; margin-bottom: 25px; margin-top: 40px; font-weight: 700; color: #1f2937; font-size: 1.5rem; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold gradient-text">Digital Hub BD</h1>
+            <a href="https://wa.me/8801XXXXXXXXX" class="bg-green-500 text-white px-5 py-2 rounded-full text-sm font-bold flex items-center hover:bg-green-600 transition">
+                <i class="fab fa-whatsapp mr-2"></i> সাপোর্ট চ্যাট
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-white py-10 px-4 text-center">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">ডিজিটাল প্রোডাক্টের <span class="text-blue-600">সেরা কালেকশন</span></h2>
+            <p class="text-gray-500 text-lg">নিরাপদ পেমেন্ট ও সুপার ফাস্ট ডেলিভারি।</p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 pb-20">
+        
+        <!-- Category 1: Tools & Subscriptions -->
+        <h3 class="category-title">সফটওয়্যার ও সাবস্ক্রিপশন</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Canva -->
+            <div class="product-card bg-white p-6 rounded-2xl text-center">
+                <img src="https://upload.wikimedia.org/wikipedia/en/3/3b/Canva_Logo.png" class="h-12 mx-auto mb-4" alt="Canva">
+                <h4 class="text-lg font-bold">ক্যানভা প্রো (লাইফটাইম)</h4>
+                <div class="text-xl font-bold text-blue-600 my-3">৳৯৯ মাত্র</div>
+                <a href="https://wa.me/8801XXXXXXXXX?text=Canva%20Pro%20Buy" class="block bg-gray-900 text-white py-2 rounded-xl font-bold hover:bg-green-600 transition">অর্ডার দিন</a>
+            </div>
+
+            <!-- CapCut -->
+            <div class="product-card bg-white p-6 rounded-2xl text-center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/CapCut_logo.svg" class="h-12 mx-auto mb-4" alt="CapCut">
+                <h4 class="text-lg font-bold">ক্যাপকাট প্রো</h4>
+                <div class="text-xl font-bold text-blue-600 my-3">৳২৪৯ মাত্র</div>
+                <a href="https://wa.me/8801XXXXXXXXX?text=CapCut%20Pro%20Buy" class="block bg-gray-900 text-white py-2 rounded-xl font-bold hover:bg-green-600 transition">অর্ডার দিন</a>
+            </div>
+        </div>
+
+        <!-- Category 2: Gaming & Gift Cards -->
+        <h3 class="category-title">গেমিং ও গিফট কার্ড</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Steam Gift Card -->
+            <div class="product-card bg-white p-6 rounded-2xl text-center border-blue-200 bg-blue-50/20">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" class="h-12 mx-auto mb-4" alt="Steam">
+                <h4 class="text-lg font-bold">স্টিম গিফট কার্ড (৫ ডলার)</h4>
+                <p class="text-gray-400 text-xs mb-2 italic">গ্লোবাল রিজিওন সাপোর্ট</p>
+                <div class="text-xl font-bold text-blue-600 my-3">৳৬৫০ মাত্র</div>
+                <a href="https://wa.me/8801XXXXXXXXX?text=Steam%20Gift%20Card%20Buy" class="block bg-blue-600 text-white py-2 rounded-xl font-bold hover:bg-green-600 transition">অর্ডার দিন</a>
+            </div>
+        </div>
+
+        <!-- Category 3: License Keys -->
+        <h3 class="category-title">লাইসেন্স ও অ্যাক্টিভেশন</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Windows Key -->
+            <div class="product-card bg-white p-6 rounded-2xl text-center">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="h-12 mx-auto mb-4" alt="Windows">
+                <h4 class="text-lg font-bold">উইন্ডোজ ১১ রিটেইল কী</h4>
+                <div class="text-xl font-bold text-blue-600 my-3">৳৩৫০ মাত্র</div>
+                <a href="https://wa.me/8801XXXXXXXXX?text=Windows%20Key%20Buy" class="block bg-gray-900 text-white py-2 rounded-xl font-bold hover:bg-green-600 transition">অর্ডার দিন</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t py-8 text-center text-gray-500">
+        <p class="font-bold text-gray-800">Digital Hub BD</p>
+        <p class="text-sm mt-1">© 2026 Developed by "SAMRAX"</p>
+    </footer>
+
+</body>
+</html>
