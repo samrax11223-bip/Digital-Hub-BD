@@ -3,119 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Hub BD | Premium Shop</title>
+    <title>Digital Hub BD | Mobile Optimized</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
         body { font-family: 'Hind Siliguri', sans-serif; }
-        .gradient-bg { background: linear-gradient(90deg, #f8f9fa, #e9ecef); }
-        .trust-badge { border-right: 1px solid #ddd; }
-        .trust-badge:last-child { border-right: none; }
-        .maintenance-screen { display: none; position: fixed; inset: 0; background: white; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        /* মোবাইলে ট্রাস্ট ব্যাজ স্ক্রল করার জন্য */
+        .trust-container { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+        .trust-badge { min-width: 120px; border-right: 1px solid #eee; }
+        /* প্রোডাক্ট কার্ড স্টাইল */
+        .product-card img { height: 80px; object-fit: contain; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50">
 
-    <!-- মেইনটেন্যান্স মোড কন্ট্রোলার -->
-    <div id="maintenance" class="maintenance-screen">
-        <img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" class="h-32 mb-6">
-        <h1 class="text-4xl font-bold text-gray-900">আমরা আপডেটের কাজ করছি!</h1>
-        <p class="text-gray-500 mt-4 text-lg">সাইটটি সাময়িকভাবে বন্ধ আছে। খুব শীঘ্রই আমরা ফিরছি।</p>
-        <p class="mt-2 font-bold text-blue-600">— Digital Hub BD Team</p>
-    </div>
-
-    <!-- Header & Nav -->
+    <!-- Navbar -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-blue-600">Digital Hub BD</h1>
-            <a href="https://wa.me/8801XXXXXXXXX" class="bg-green-500 text-white px-4 py-2 rounded-lg font-bold flex items-center hover:bg-green-600 transition">
-                <i class="fab fa-whatsapp mr-2"></i> হোয়াটসঅ্যাপ সাপোর্ট
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-blue-600">Digital Hub BD</h1>
+            <a href="https://wa.me/8801XXXXXXXXX" class="bg-green-500 text-white p-2 rounded-full shadow-lg">
+                <i class="fab fa-whatsapp text-xl"></i>
             </a>
         </div>
     </nav>
 
-    <!-- ক্যাটাগরি মেনু (image_fbd937.png এর মতো) -->
-    <div class="bg-orange-500 text-white overflow-x-auto whitespace-nowrap py-3">
-        <div class="max-w-7xl mx-auto px-4 flex space-x-8 justify-center font-bold text-sm uppercase tracking-wider">
-            <a href="#" class="hover:underline">All</a>
-            <a href="#" class="hover:underline">Microsoft</a>
-            <a href="#" class="hover:underline">Anti Virus</a>
-            <a href="#" class="hover:underline">Streaming</a>
-            <a href="#" class="hover:underline">Educational</a>
-            <a href="#" class="hover:underline">Editing</a>
-            <a href="#" class="hover:underline">Utilities</a>
+    <!-- ক্যাটাগরি মেনু (মোবাইলে স্ক্রল হবে) -->
+    <div class="bg-orange-500 text-white overflow-x-auto whitespace-nowrap py-3 px-4 shadow-md">
+        <div class="flex space-x-6 font-bold text-xs uppercase tracking-wider">
+            <a href="#">All</a>
+            <a href="#">Microsoft</a>
+            <a href="#">Anti Virus</a>
+            <a href="#">Streaming</a>
+            <a href="#">Editing</a>
         </div>
     </div>
 
-    <!-- ট্রাস্ট ব্যাজ সেকশন (image_fbd95c.png এর মতো) -->
-    <div class="max-w-7xl mx-auto px-4 mt-8">
-        <div class="bg-white border rounded-lg p-6 grid grid-cols-2 md:grid-cols-5 gap-4 text-center items-center shadow-sm">
-            <div class="trust-badge px-2">
-                <i class="fas fa-rocket text-orange-500 text-2xl mb-2"></i>
-                <h5 class="font-bold text-xs">Instant Delivery</h5>
-                <p class="text-[10px] text-gray-400">Mail Delivery</p>
+    <!-- ট্রাস্ট ব্যাজ (মোবাইলে স্লাইড হবে) -->
+    <div class="px-4 mt-6">
+        <div class="trust-container bg-white border rounded-xl py-4 shadow-sm flex">
+            <div class="trust-badge text-center px-4">
+                <i class="fas fa-rocket text-orange-500 text-xl mb-1"></i>
+                <h5 class="font-bold text-[10px]">Instant Delivery</h5>
             </div>
-            <div class="trust-badge px-2">
-                <i class="fas fa-undo text-orange-500 text-2xl mb-2"></i>
-                <h5 class="font-bold text-xs">Refund & Exchange</h5>
-                <p class="text-[10px] text-gray-400">Within 24hrs</p>
+            <div class="trust-badge text-center px-4">
+                <i class="fas fa-undo text-orange-500 text-xl mb-1"></i>
+                <h5 class="font-bold text-[10px]">Easy Refund</h5>
             </div>
-            <div class="trust-badge px-2">
-                <i class="fas fa-credit-card text-orange-500 text-2xl mb-2"></i>
-                <h5 class="font-bold text-xs">Secure Payment</h5>
-                <p class="text-[10px] text-gray-400">100% Secured</p>
+            <div class="trust-badge text-center px-4">
+                <i class="fas fa-credit-card text-orange-500 text-xl mb-1"></i>
+                <h5 class="font-bold text-[10px]">Secure Pay</h5>
             </div>
-            <div class="trust-badge px-2">
-                <i class="fas fa-headset text-orange-500 text-2xl mb-2"></i>
-                <h5 class="font-bold text-xs">Support Session</h5>
-                <p class="text-[10px] text-gray-400">7/24 Support</p>
-            </div>
-            <div class="px-2">
-                <i class="fas fa-gift text-orange-500 text-2xl mb-2"></i>
-                <h5 class="font-bold text-xs">Quality Guarantee</h5>
-                <p class="text-[10px] text-gray-400">Authentic Check</p>
+            <div class="trust-badge text-center px-4 border-none">
+                <i class="fas fa-headset text-orange-500 text-xl mb-1"></i>
+                <h5 class="font-bold text-[10px]">24/7 Support</h5>
             </div>
         </div>
     </div>
 
-    <!-- প্রোডাক্ট গ্রিড -->
-    <section class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- প্রোডাক্ট সেকশন (মোবাইলে ২ কলামে দেখাবে) -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <h3 class="text-lg font-bold mb-6 border-l-4 border-blue-600 pl-2">আমাদের শপ</h3>
         
-        <!-- Canva (Fixed Pic) -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border hover:border-blue-500 transition text-center">
-            <img src="https://www.canva.com/brand/images/canva-logo-blue.png" class="h-16 mx-auto mb-4 object-contain">
-            <h4 class="text-lg font-bold">Canva Pro Lifetime</h4>
-            <p class="text-blue-600 font-bold text-xl my-2">৳৯৯</p>
-            <a href="https://wa.me/8801XXXXXXXXX?text=Buy%20Canva" class="block bg-gray-900 text-white py-2 rounded-xl mt-4 font-bold hover:bg-green-600 transition">অর্ডার করুন</a>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            
+            <!-- Product 1 -->
+            <div class="bg-white p-4 rounded-xl border shadow-sm flex flex-col justify-between">
+                <img src="https://www.canva.com/brand/images/canva-logo-blue.png" class="mx-auto mb-3">
+                <h4 class="text-sm font-bold text-center">Canva Pro</h4>
+                <p class="text-blue-600 font-bold text-center my-2 text-sm">৳৯৯</p>
+                <a href="https://wa.me/8801XXXXXXXXX" class="bg-gray-900 text-white text-[10px] py-2 rounded-lg text-center font-bold uppercase">অর্ডার দিন</a>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="bg-white p-4 rounded-xl border shadow-sm flex flex-col justify-between">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" class="mx-auto mb-3">
+                <h4 class="text-sm font-bold text-center">Steam Card</h4>
+                <p class="text-blue-600 font-bold text-center my-2 text-sm">৳৬৫০</p>
+                <a href="https://wa.me/8801XXXXXXXXX" class="bg-gray-900 text-white text-[10px] py-2 rounded-lg text-center font-bold uppercase">অর্ডার দিন</a>
+            </div>
+
         </div>
+    </div>
 
-        <!-- Steam -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border hover:border-blue-500 transition text-center">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" class="h-16 mx-auto mb-4">
-            <h4 class="text-lg font-bold">Steam Gift Card ($5)</h4>
-            <p class="text-blue-600 font-bold text-xl my-2">৳৬৫০</p>
-            <a href="https://wa.me/8801XXXXXXXXX?text=Buy%20Steam" class="block bg-gray-900 text-white py-2 rounded-xl mt-4 font-bold hover:bg-green-600 transition">অর্ডার করুন</a>
-        </div>
+    <footer class="bg-white border-t py-6 text-center text-gray-400 text-[10px]">
+        <p>© 2026 Developed by "SAMRAX"</p>
+    </footer>
 
-        <!-- Windows -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border hover:border-blue-500 transition text-center">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="h-16 mx-auto mb-4">
-            <h4 class="text-lg font-bold">Windows 11 Retail Key</h4>
-            <p class="text-blue-600 font-bold text-xl my-2">৳৩৫০</p>
-            <a href="https://wa.me/8801XXXXXXXXX?text=Buy%20Windows" class="block bg-gray-900 text-white py-2 rounded-xl mt-4 font-bold hover:bg-green-600 transition">অর্ডার করুন</a>
-        </div>
-
-    </section>
-
-    <script>
-        // মেইনটেন্যান্স মোড অন/অফ করার সুইচ
-        let isMaintenance = false; // সাইট বন্ধ করতে এটাকে true করে দাও
-
-        if (isMaintenance) {
-            document.getElementById('maintenance').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-    </script>
 </body>
 </html>
