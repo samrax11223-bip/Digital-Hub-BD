@@ -3,91 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Hub BD | Mobile Optimized</title>
+    <title>Digital Hub BD | Premium Shop</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
         body { font-family: 'Hind Siliguri', sans-serif; }
-        /* মোবাইলে ট্রাস্ট ব্যাজ স্ক্রল করার জন্য */
-        .trust-container { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
-        .trust-badge { min-width: 120px; border-right: 1px solid #eee; }
-        /* প্রোডাক্ট কার্ড স্টাইল */
-        .product-card img { height: 80px; object-fit: contain; }
+        
+        /* ডেক্সটপে সাধারণ এবং মোবাইলে স্ক্রল মেনু */
+        .category-scroll { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .category-scroll::-webkit-scrollbar { display: none; }
+
+        /* পিসি এবং মোবাইলে ইমেজ সাইজ ব্যালেন্স */
+        .product-img { height: 100px; object-fit: contain; width: 100%; transition: transform 0.3s ease; }
+        .product-card:hover .product-img { transform: scale(1.05); }
+
+        .trust-badge { border-right: 1px solid #eee; min-width: 130px; flex-shrink: 0; }
+        @media (min-width: 768px) { .trust-badge { border-right: 1px solid #eee; width: 20%; min-width: unset; } }
+        .trust-badge:last-child { border-right: none; }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 text-gray-800">
 
     <!-- Navbar -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-blue-600">Digital Hub BD</h1>
-            <a href="https://wa.me/8801XXXXXXXXX" class="bg-green-500 text-white p-2 rounded-full shadow-lg">
-                <i class="fab fa-whatsapp text-xl"></i>
+        <div class="max-w-7xl mx-auto px-4 py-3 md:py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-extrabold text-blue-600 tracking-tight">Digital Hub BD</h1>
+            <a href="https://wa.me/8801XXXXXXXXX" class="bg-green-500 text-white px-4 py-2 rounded-full font-bold text-xs md:text-sm flex items-center hover:bg-green-600 transition shadow-md">
+                <i class="fab fa-whatsapp mr-2 text-lg"></i> <span class="hidden md:inline">সাপোর্ট চ্যাট</span><span class="md:hidden">সাপোর্ট</span>
             </a>
         </div>
     </nav>
 
-    <!-- ক্যাটাগরি মেনু (মোবাইলে স্ক্রল হবে) -->
-    <div class="bg-orange-500 text-white overflow-x-auto whitespace-nowrap py-3 px-4 shadow-md">
-        <div class="flex space-x-6 font-bold text-xs uppercase tracking-wider">
-            <a href="#">All</a>
-            <a href="#">Microsoft</a>
-            <a href="#">Anti Virus</a>
-            <a href="#">Streaming</a>
-            <a href="#">Editing</a>
+    <!-- ক্যাটাগরি বার (পিসিতে সেন্টারে থাকবে, মোবাইলে স্ক্রল হবে) -->
+    <div class="bg-orange-500 text-white shadow-md">
+        <div class="max-w-7xl mx-auto category-scroll flex md:justify-center items-center py-3 px-4 space-x-6 md:space-x-10 font-bold text-[11px] md:text-xs uppercase tracking-widest">
+            <a href="#" class="hover:text-orange-100 transition">All</a>
+            <a href="#" class="hover:text-orange-100 transition">Microsoft</a>
+            <a href="#" class="hover:text-orange-100 transition">Anti Virus</a>
+            <a href="#" class="hover:text-orange-100 transition">Streaming</a>
+            <a href="#" class="hover:text-orange-100 transition">Editing</a>
+            <a href="#" class="hover:text-orange-100 transition">Utilities</a>
         </div>
     </div>
 
-    <!-- ট্রাস্ট ব্যাজ (মোবাইলে স্লাইড হবে) -->
-    <div class="px-4 mt-6">
-        <div class="trust-container bg-white border rounded-xl py-4 shadow-sm flex">
+    <!-- ট্রাস্ট সেকশন -->
+    <div class="max-w-7xl mx-auto px-4 mt-6 md:mt-10">
+        <div class="bg-white border rounded-2xl shadow-sm flex overflow-x-auto md:overflow-hidden py-6 md:py-8 category-scroll">
             <div class="trust-badge text-center px-4">
-                <i class="fas fa-rocket text-orange-500 text-xl mb-1"></i>
-                <h5 class="font-bold text-[10px]">Instant Delivery</h5>
+                <i class="fas fa-rocket text-orange-500 text-2xl mb-2"></i>
+                <h5 class="font-bold text-xs">Instant Delivery</h5>
+                <p class="text-[10px] text-gray-400">Mail Delivery</p>
             </div>
             <div class="trust-badge text-center px-4">
-                <i class="fas fa-undo text-orange-500 text-xl mb-1"></i>
-                <h5 class="font-bold text-[10px]">Easy Refund</h5>
+                <i class="fas fa-undo text-orange-500 text-2xl mb-2"></i>
+                <h5 class="font-bold text-xs">Easy Refund</h5>
+                <p class="text-[10px] text-gray-400">Within 24hrs</p>
             </div>
             <div class="trust-badge text-center px-4">
-                <i class="fas fa-credit-card text-orange-500 text-xl mb-1"></i>
-                <h5 class="font-bold text-[10px]">Secure Pay</h5>
+                <i class="fas fa-credit-card text-orange-500 text-2xl mb-2"></i>
+                <h5 class="font-bold text-xs">Secure Pay</h5>
+                <p class="text-[10px] text-gray-400">100% Secured</p>
+            </div>
+            <div class="trust-badge text-center px-4">
+                <i class="fas fa-headset text-orange-500 text-2xl mb-2"></i>
+                <h5 class="font-bold text-xs">7/24 Support</h5>
+                <p class="text-[10px] text-gray-400">Fast Response</p>
             </div>
             <div class="trust-badge text-center px-4 border-none">
-                <i class="fas fa-headset text-orange-500 text-xl mb-1"></i>
-                <h5 class="font-bold text-[10px]">24/7 Support</h5>
+                <i class="fas fa-gift text-orange-500 text-2xl mb-2"></i>
+                <h5 class="font-bold text-xs">Quality Check</h5>
+                <p class="text-[10px] text-gray-400">Authentic Key</p>
             </div>
         </div>
     </div>
 
-    <!-- প্রোডাক্ট সেকশন (মোবাইলে ২ কলামে দেখাবে) -->
-    <div class="max-w-7xl mx-auto px-4 py-8">
-        <h3 class="text-lg font-bold mb-6 border-l-4 border-blue-600 pl-2">আমাদের শপ</h3>
+    <!-- প্রোডাক্ট গ্রিড -->
+    <main class="max-w-7xl mx-auto px-4 py-10 md:py-16">
+        <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-8 border-l-4 border-blue-600 pl-3">আমাদের কালেকশন</h3>
         
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
             
-            <!-- Product 1 -->
-            <div class="bg-white p-4 rounded-xl border shadow-sm flex flex-col justify-between">
-                <img src="https://www.canva.com/brand/images/canva-logo-blue.png" class="mx-auto mb-3">
-                <h4 class="text-sm font-bold text-center">Canva Pro</h4>
-                <p class="text-blue-600 font-bold text-center my-2 text-sm">৳৯৯</p>
-                <a href="https://wa.me/8801XXXXXXXXX" class="bg-gray-900 text-white text-[10px] py-2 rounded-lg text-center font-bold uppercase">অর্ডার দিন</a>
+            <!-- Canva -->
+            <div class="product-card bg-white p-4 md:p-6 rounded-2xl border hover:border-blue-500 hover:shadow-xl transition-all duration-300 flex flex-col">
+                <img src="https://www.canva.com/brand/images/canva-logo-blue.png" class="product-img mb-4" alt="Canva">
+                <h4 class="text-sm md:text-lg font-bold text-center text-gray-700">Canva Pro Lifetime</h4>
+                <div class="mt-auto">
+                    <p class="text-blue-600 font-extrabold text-center my-3 text-lg md:text-xl">৳৯৯</p>
+                    <a href="https://wa.me/8801XXXXXXXXX" class="block bg-gray-900 text-white py-2.5 rounded-xl text-[11px] md:text-sm font-bold text-center uppercase hover:bg-green-600 transition shadow-sm">অর্ডার করুন</a>
+                </div>
             </div>
 
-            <!-- Product 2 -->
-            <div class="bg-white p-4 rounded-xl border shadow-sm flex flex-col justify-between">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" class="mx-auto mb-3">
-                <h4 class="text-sm font-bold text-center">Steam Card</h4>
-                <p class="text-blue-600 font-bold text-center my-2 text-sm">৳৬৫০</p>
-                <a href="https://wa.me/8801XXXXXXXXX" class="bg-gray-900 text-white text-[10px] py-2 rounded-lg text-center font-bold uppercase">অর্ডার দিন</a>
+            <!-- Steam -->
+            <div class="product-card bg-white p-4 md:p-6 rounded-2xl border hover:border-blue-500 hover:shadow-xl transition-all duration-300 flex flex-col">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" class="product-img mb-4" alt="Steam">
+                <h4 class="text-sm md:text-lg font-bold text-center text-gray-700">Steam Gift Card ($5)</h4>
+                <div class="mt-auto">
+                    <p class="text-blue-600 font-extrabold text-center my-3 text-lg md:text-xl">৳৬৫০</p>
+                    <a href="https://wa.me/8801XXXXXXXXX" class="block bg-gray-900 text-white py-2.5 rounded-xl text-[11px] md:text-sm font-bold text-center uppercase hover:bg-green-600 transition shadow-sm">অর্ডার করুন</a>
+                </div>
+            </div>
+
+            <!-- Windows -->
+            <div class="product-card bg-white p-4 md:p-6 rounded-2xl border hover:border-blue-500 hover:shadow-xl transition-all duration-300 flex flex-col">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="product-img mb-4" alt="Windows">
+                <h4 class="text-sm md:text-lg font-bold text-center text-gray-700">Windows 11 Retail Key</h4>
+                <div class="mt-auto">
+                    <p class="text-blue-600 font-extrabold text-center my-3 text-lg md:text-xl">৳৩৫০</p>
+                    <a href="https://wa.me/8801XXXXXXXXX" class="block bg-gray-900 text-white py-2.5 rounded-xl text-[11px] md:text-sm font-bold text-center uppercase hover:bg-green-600 transition shadow-sm">অর্ডার করুন</a>
+                </div>
             </div>
 
         </div>
-    </div>
+    </main>
 
-    <footer class="bg-white border-t py-6 text-center text-gray-400 text-[10px]">
-        <p>© 2026 Developed by "SAMRAX"</p>
+    <footer class="bg-white border-t py-10 text-center">
+        <p class="text-gray-900 font-bold tracking-widest uppercase text-sm">Digital Hub BD</p>
+        <p class="text-gray-400 text-[10px] md:text-xs mt-2 uppercase">Developed by "SAMRAX"</p>
     </footer>
 
 </body>
