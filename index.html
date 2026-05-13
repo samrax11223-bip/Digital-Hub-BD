@@ -17,7 +17,22 @@
         .scrolling-text { position: absolute; white-space: nowrap; animation: scroll-left 25s linear infinite; font-weight: bold; font-size: 14px; }
         @keyframes scroll-left { 0% { left: 100%; } 100% { left: -150%; } }
 
-        /* মেইনটেইনেন্স গ্লো অ্যানিমেশন */
+        /* ইউজার প্যানেল স্লাইড */
+        #userPanel { transition: transform 0.3s ease-in-out; transform: translateX(100%); }
+        #userPanel.open { transform: translateX(0); }
+
+        .product-img { height: 100px; object-fit: contain; width: 100%; transition: transform 0.3s; }
+        .product-card:hover .product-img { transform: scale(1.1); }
+        
+        .stock-out { filter: grayscale(1); opacity: 0.6; }
+        .stock-out-badge { position: absolute; top: 10px; right: 10px; background: red; color: white; padding: 2px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; z-index: 10; }
+
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(8px); }
+
+        /* ক্যাটাগরি বাটন এক্টিভ স্টেট */
+        .cat-btn.active { background-color: #2563eb !important; color: white !important; border-color: #2563eb !important; }
+        
+        /* মেইনটেইনেন্স গ্লো */
         @keyframes maintenance-glow {
             0% { transform: scale(1); opacity: 0.8; }
             50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 30px rgba(37, 99, 235, 0.4); }
@@ -25,45 +40,22 @@
         }
         .maintenance-icon { animation: maintenance-glow 3s ease-in-out infinite; }
 
-        .product-img { height: 100px; object-fit: contain; width: 100%; transition: transform 0.3s; }
-        .product-card:hover .product-img { transform: scale(1.1); }
-        
-        .stock-out { filter: grayscale(1); opacity: 0.6; position: relative; }
-        .stock-out-badge { position: absolute; top: 10px; right: 10px; background: red; color: white; padding: 2px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; z-index: 10; }
-
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(8px); }
-        
         #maintenanceScreen { display: none; position: fixed; inset: 0; background: #0f172a; z-index: 3000; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- Maintenance Mode Screen (স্লোগান আগেরটি এবং বাটন ছাড়া) -->
+    <!-- Maintenance Screen -->
     <div id="maintenanceScreen">
         <div class="maintenance-icon bg-blue-600/10 p-10 rounded-full mb-6 border border-blue-500/20">
             <i class="fas fa-tools text-7xl text-blue-500"></i>
         </div>
         <h1 class="text-3xl font-bold mb-3 logo-font uppercase tracking-widest text-blue-500">Maintenance Mode</h1>
-        <p class="text-gray-400 max-w-xs mx-auto text-sm leading-relaxed">
-            আমরা বর্তমানে সাইটটি আপডেট করছি। খুব শীঘ্রই আমরা ফিরে আসব। আমাদের সাথেই থাকুন!
-        </p>
-    </div>
-
-    <!-- Login Section -->
-    <div id="loginSection" class="fixed inset-0 bg-gray-900 z-[2000] flex items-center justify-center p-4">
-        <div class="bg-white p-8 rounded-[32px] shadow-2xl max-w-sm w-full text-center border border-gray-100">
-            <div class="bg-blue-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-100">
-                <i class="fas fa-user-shield text-white text-2xl"></i>
-            </div>
-            <h2 class="text-2xl font-bold text-gray-900 mb-2 uppercase logo-font">Digital Hub BD</h2>
-            <p class="text-xs text-gray-400 mb-6 font-bold tracking-widest uppercase">Login to access</p>
-            <input type="text" id="username" placeholder="আপনার নাম" class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl px-5 py-4 mb-4 focus:border-blue-600 outline-none transition text-center font-bold">
-            <button onclick="handleLogin()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-blue-700 transition">LOGIN NOW</button>
-        </div>
+        <p class="text-gray-400 max-w-xs mx-auto text-sm italic">আমরা বর্তমানে সাইটটি আপডেট করছি। খুব শীঘ্রই আমরা ফিরে আসব।</p>
     </div>
 
     <!-- Main Content -->
-    <div id="mainContent" style="display: none;">
+    <div id="mainContent">
         <div class="scrolling-notice">
             <div class="scrolling-text">📢 ইউটিউব প্রিমিয়াম ১ মাস মাত্র ৪০ টাকা! পেমেন্ট প্রুফ দিলেই ইমেইলে ইনস্ট্যান্ট ডেলিভারি। ⚡ আমাদের সব সার্ভিস ১০০% অথেন্টিক। 🚀</div>
         </div>
@@ -74,108 +66,151 @@
                     <div class="bg-blue-600 p-2 rounded-xl mr-3 shadow-lg"><i class="fas fa-bolt text-white text-xl"></i></div>
                     <div class="flex flex-col leading-none">
                         <span class="logo-font text-xl md:text-2xl font-black text-gray-900 tracking-tighter uppercase">DIGITAL<span class="text-blue-600">HUB</span></span>
-                        <span class="text-[10px] md:text-[12px] font-bold text-gray-400 tracking-[0.3em] uppercase mt-1">PREMIUM SHOP</span>
+                        <!-- নিচে সেই প্রিমিয়াম ট্যাগলাইনটি আবার যোগ করা হলো -->
+                        <span class="text-[10px] font-bold text-gray-400 tracking-[0.2em] uppercase">Premium Shop</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-3">
-                    <span id="displayUser" class="hidden md:block text-sm font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-lg uppercase"></span>
-                    <button onclick="location.reload()" class="bg-red-50 text-red-500 p-2 rounded-lg text-sm font-bold"><i class="fas fa-sign-out-alt"></i></button>
-                </div>
+                <button onclick="toggleUserPanel()" class="bg-blue-50 text-blue-600 px-4 py-2 rounded-2xl hover:bg-blue-100 transition flex items-center gap-2">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="text-xs font-bold uppercase">Orders</span>
+                </button>
             </div>
         </nav>
 
-        <main class="max-w-7xl mx-auto px-4 py-10">
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
-                <!-- YouTube -->
-                <div class="product-card bg-white p-4 md:p-6 rounded-2xl border border-red-100 shadow-sm flex flex-col relative">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" class="product-img mb-4">
-                    <h4 class="text-sm md:text-lg font-bold text-center">YouTube Premium</h4>
-                    <p class="text-red-600 font-extrabold my-2 text-center text-lg">৳৪০</p>
-                    <button onclick="openOrderModal('YouTube Premium', 40)" class="w-full bg-red-600 text-white py-2 rounded-xl text-[11px] font-bold uppercase shadow-sm">অর্ডার করুন</button>
-                </div>
+        <!-- Category Section -->
+        <div class="max-w-7xl mx-auto px-4 mt-6">
+            <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                <button id="btn-all" onclick="filterCategory('all')" class="cat-btn active flex-shrink-0 px-6 py-2 rounded-full bg-white border border-gray-200 text-sm font-bold transition shadow-sm">All</button>
+                <button id="btn-subscription" onclick="filterCategory('subscription')" class="cat-btn flex-shrink-0 px-6 py-2 rounded-full bg-white border border-gray-200 text-sm font-bold transition shadow-sm">Subscription</button>
+                <button id="btn-software" onclick="filterCategory('software')" class="cat-btn flex-shrink-0 px-6 py-2 rounded-full bg-white border border-gray-200 text-sm font-bold transition shadow-sm">Software</button>
+                <button id="btn-giftcard" onclick="filterCategory('giftcard')" class="cat-btn flex-shrink-0 px-6 py-2 rounded-full bg-white border border-gray-200 text-sm font-bold transition shadow-sm">Gift Card</button>
+            </div>
+        </div>
 
-                <!-- Canva -->
-                <div class="product-card bg-white p-4 md:p-6 rounded-2xl border border-blue-100 shadow-sm flex flex-col relative">
-                    <img src="https://img.icons8.com/color/512/canva.png" class="product-img mb-4">
-                    <h4 class="text-sm md:text-lg font-bold text-center">Canva Pro</h4>
-                    <p class="text-blue-600 font-extrabold my-2 text-center text-lg">৳৫০</p>
-                    <button onclick="openOrderModal('Canva Pro', 50)" class="w-full bg-blue-600 text-white py-2 rounded-xl text-[11px] font-bold uppercase shadow-sm">অর্ডার করুন</button>
-                </div>
-
-                <!-- Windows 11 -->
-                <div class="product-card bg-white p-4 md:p-6 rounded-2xl border flex flex-col stock-out">
-                    <span class="stock-out-badge">STOCK OUT</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="product-img mb-4">
-                    <h4 class="text-sm md:text-lg font-bold text-center">Windows 11 Key</h4>
-                    <p class="text-gray-400 font-extrabold my-2 text-center text-lg">৳৩৫০</p>
-                    <button disabled class="w-full bg-gray-400 text-white py-2 rounded-xl text-[11px] font-bold uppercase cursor-not-allowed">স্টক আউট</button>
-                </div>
-
-                <!-- Steam -->
-                <div class="product-card bg-white p-4 md:p-6 rounded-2xl border flex flex-col stock-out">
-                    <span class="stock-out-badge">STOCK OUT</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" class="product-img mb-4">
-                    <h4 class="text-sm md:text-lg font-bold text-center">Steam Gift Card</h4>
-                    <p class="text-gray-400 font-extrabold my-2 text-center text-lg">৳৬৫০</p>
-                    <button disabled class="w-full bg-gray-400 text-white py-2 rounded-xl text-[11px] font-bold uppercase cursor-not-allowed">স্টক আউট</button>
-                </div>
+        <main class="max-w-7xl mx-auto px-4 py-6">
+            <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
+                <!-- Products dynamically loaded -->
             </div>
         </main>
+    </div>
+
+    <!-- User Panel (Order History) -->
+    <div id="userPanel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[3000] p-6 overflow-y-auto border-l border-gray-100">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-xl font-bold logo-font text-blue-600 uppercase">My Orders</h3>
+            <button onclick="toggleUserPanel()" class="text-gray-400 text-2xl hover:text-red-500 transition">&times;</button>
+        </div>
+        <div id="orderHistoryList" class="space-y-4"></div>
+        <div class="mt-10 p-4 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+            <p class="text-[10px] text-gray-400 text-center uppercase font-bold tracking-widest">History is saved locally</p>
+        </div>
     </div>
 
     <!-- Order Modal -->
     <div id="orderModal" class="modal-overlay">
         <div class="bg-white p-8 rounded-[32px] shadow-2xl max-w-sm w-full relative">
             <button onclick="closeModal()" class="absolute top-5 right-5 text-gray-400 text-2xl">&times;</button>
-            <h2 class="text-2xl font-bold text-gray-900 mb-2" id="modalProdTitle">অর্ডার করুন</h2>
-            <input type="email" id="orderEmail" placeholder="আপনার ইমেইল দিন" class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl px-5 py-4 mb-6 focus:border-blue-600 outline-none transition">
-            <button onclick="submitToWhatsApp()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-green-600 transition">SUBMIT ORDER</button>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2" id="modalProdTitle">Order Now</h2>
+            <input type="email" id="orderEmail" placeholder="example@gmail.com" class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl px-5 py-4 mb-6 outline-none focus:border-blue-600 font-semibold">
+            <button onclick="submitOrder()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-bold shadow-lg">SUBMIT & WHATSAPP</button>
         </div>
     </div>
 
     <script>
-        // Maintenance Mode Toggle (true/false)
-        const isMaintenanceMode = true; 
+        const isMaintenanceMode = false; // এখানে true করলে মেইনটেইনেন্স মোড চালু হবে
+        let orders = JSON.parse(localStorage.getItem('myOrders')) || [];
 
-        window.onload = function() {
+        const products = [
+            { id: 1, name: 'YouTube Premium', price: 40, category: 'subscription', stock: true, img: 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png', badge: 'HOT' },
+            { id: 2, name: 'Canva Pro', price: 50, category: 'subscription', stock: true, img: 'https://img.icons8.com/color/512/canva.png', badge: '' },
+            { id: 3, name: 'Windows 11 Key', price: 350, category: 'software', stock: false, img: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg', badge: '' },
+            { id: 4, name: 'Steam Gift Card', price: 650, category: 'giftcard', stock: false, img: 'https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg', badge: '' }
+        ];
+
+        window.onload = () => {
             if (isMaintenanceMode) {
                 document.getElementById('maintenanceScreen').style.display = 'flex';
-                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'none';
             }
+            renderProducts('all');
+            renderOrders();
         };
 
-        function handleLogin() {
-            if (isMaintenanceMode) return;
-            const user = document.getElementById('username').value;
-            if (user.trim().length > 1) {
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'block';
-                document.getElementById('displayUser').innerText = "Acc: " + user;
-                localStorage.setItem('currentUser', user);
-            } else {
-                alert("দয়া করে সঠিক নাম দিন।");
-            }
+        function toggleUserPanel() { document.getElementById('userPanel').classList.toggle('open'); }
+
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + cat).classList.add('active');
+            renderProducts(cat);
         }
 
-        let selectedProduct = "";
-        let selectedPrice = 0;
+        function renderProducts(filter) {
+            const grid = document.getElementById('productGrid');
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+            
+            grid.innerHTML = filtered.map(p => `
+                <div class="product-card bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col relative ${!p.stock ? 'stock-out' : ''}">
+                    ${p.badge ? `<div class="absolute top-2 left-2 bg-red-600 text-white text-[10px] px-2 py-1 rounded font-bold">${p.badge}</div>` : ''}
+                    ${!p.stock ? `<span class="stock-out-badge">STOCK OUT</span>` : ''}
+                    <img src="${p.img}" class="product-img mb-4 mx-auto">
+                    <h4 class="font-bold text-center text-sm md:text-base">${p.name}</h4>
+                    <p class="text-blue-600 font-black text-center text-xl">৳${p.price}</p>
+                    <button ${!p.stock ? 'disabled' : ''} onclick="openOrderModal('${p.name}', ${p.price})" 
+                        class="w-full mt-4 ${p.stock ? 'bg-blue-600 shadow-blue-100 shadow-lg' : 'bg-gray-400'} text-white py-3 rounded-2xl text-xs font-bold uppercase transition hover:opacity-90">
+                        ${p.stock ? 'Buy Now' : 'Out of Stock'}
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        let currentProduct = "", currentPrice = 0;
         function openOrderModal(name, price) {
-            selectedProduct = name;
-            selectedPrice = price;
+            currentProduct = name; currentPrice = price;
             document.getElementById('modalProdTitle').innerText = name;
             document.getElementById('orderModal').style.display = 'flex';
         }
         function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
-        
-        function submitToWhatsApp() {
+
+        function submitOrder() {
             const email = document.getElementById('orderEmail').value;
-            if (!email.includes('@')) { alert("সঠিক ইমেইল দিন।"); return; }
+            if (!email.includes('@')) { alert("Valid email required!"); return; }
+
             const orderId = 'DHB' + Math.floor(100000 + Math.random() * 900000);
-            const user = localStorage.getItem('currentUser') || "User";
-            const whatsappNumber = "8801XXXXXXXXX"; 
-            const message = `👋 *Digital Hub BD*\n🆔 ID: ${orderId}\n👤 User: ${user}\n📦 Product: ${selectedProduct}\n📧 Email: ${email}\n💰 Price: ${selectedPrice} BDT`;
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+            const newOrder = { 
+                id: orderId, 
+                product: currentProduct, 
+                price: currentPrice, 
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            };
+
+            orders.unshift(newOrder);
+            localStorage.setItem('myOrders', JSON.stringify(orders));
+            renderOrders();
             closeModal();
+            toggleUserPanel();
+            
+            const whatsappNumber = "8801XXXXXXXXX"; 
+            const msg = `👋 *New Order*\n🆔 ID: ${orderId}\n📦 Product: ${currentProduct}\n📧 Email: ${email}\n💰 Price: ${currentPrice} BDT`;
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function renderOrders() {
+            const container = document.getElementById('orderHistoryList');
+            if (orders.length === 0) {
+                container.innerHTML = `<div class="text-center py-10 text-gray-400 text-xs italic">No orders found.</div>`;
+                return;
+            }
+            container.innerHTML = orders.map(o => `
+                <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-[10px] font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded">#${o.id}</span>
+                        <span class="text-[9px] text-gray-400 uppercase font-bold">${o.date}</span>
+                    </div>
+                    <p class="text-sm font-bold text-gray-800">${o.product}</p>
+                    <p class="text-xs font-bold text-blue-500 mt-1">৳${o.price}</p>
+                </div>
+            `).join('');
         }
     </script>
 </body>
