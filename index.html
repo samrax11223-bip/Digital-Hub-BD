@@ -1,196 +1,659 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Hub BD | Premium Shop</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Digital Hub BD | Premium Digital Products</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Outfit:wght@400;700&display=swap');
-        
-        body { font-family: 'Hind Siliguri', sans-serif; }
-        .logo-font { font-family: 'Outfit', sans-serif; }
+        /* --- CSS Variables & Reset --- */
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #6366f1; /* Indigo */
+            --primary-hover: #4f46e5;
+            --accent: #ec4899; /* Pink */
+            --success: #10b981;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            --container-width: 1200px;
+        }
 
-        /* নোটিশ অ্যানিমেশন */
-        .scrolling-notice { background: #1e293b; color: white; padding: 10px 0; overflow: hidden; border-bottom: 2px solid #2563eb; position: relative; height: 40px; }
-        .scrolling-text { position: absolute; white-space: nowrap; animation: scroll-left 25s linear infinite; font-weight: bold; font-size: 14px; }
-        @keyframes scroll-left { 0% { left: 100%; } 100% { left: -150%; } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* মোবাইল ক্যাটাগরি স্ক্রলবার হাইড করা */
-        .category-scroll::-webkit-scrollbar { display: none; }
-        .category-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        body {
+            font-family: 'Hind Siliguri', 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-        /* ইউজার প্যানেল */
-        #userPanel { transition: transform 0.3s ease-in-out; transform: translateX(100%); }
-        #userPanel.open { transform: translateX(0); }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
 
-        .product-img { height: 90px; object-fit: contain; width: 100%; transition: transform 0.3s; }
-        @media (min-width: 768px) { .product-img { height: 120px; } }
-        
-        .product-card:hover .product-img { transform: scale(1.1); }
-        .stock-out { filter: grayscale(1); opacity: 0.6; }
-        .stock-out-badge { position: absolute; top: 10px; right: 10px; background: red; color: white; padding: 2px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; z-index: 10; }
+        /* --- Layout Utilities --- */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(8px); }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            text-align: center;
+            width: 100%;
+        }
 
-        /* এক্টিভ বাটন */
-        .cat-btn.active { background-color: #2563eb !important; color: white !important; border-color: #2563eb !important; transform: scale(1.05); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        /* --- Header / Navigation --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 15px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 160px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99,102,241,0.3) 0%, rgba(15,23,42,0) 70%);
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* --- Trust Signals --- */
+        .trust-bar {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .trust-item i {
+            color: var(--success);
+        }
+
+        /* --- Product Grid --- */
+        .products-section {
+            padding: 50px 0 100px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .badge.hot { background: rgba(236, 72, 153, 0.2); color: var(--accent); }
+        .badge.new { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Brand Colors for Icons */
+        .icon-yt { color: #ff0000; background: rgba(255,0,0,0.1); }
+        .icon-spotify { color: #1db954; background: rgba(29,185,84,0.1); }
+        .icon-netflix { color: #e50914; background: rgba(229,9,20,0.1); }
+        .icon-canva { color: #00c4cc; background: rgba(0,196,204,0.1); }
+
+        .product-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .product-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .price small {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+
+        .features-list {
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .features-list li i {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+
+        /* --- Input Styling for Modal --- */
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            background: #0f172a;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: var(--border-radius);
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            outline: none;
+            transition: var(--transition);
+        }
+        .modal-input:focus {
+            border-color: var(--primary);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #0b1120;
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* --- Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 420px;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* --- Maintenance Screen Styling --- */
+        #maintenanceScreen {
+            position: fixed;
+            inset: 0;
+            background: #0f172a;
+            z-index: 99999;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        #maintenanceScreen i {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            animation: fa-spin 4s linear infinite;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.3rem; }
+            .nav-links { display: none; }
+            .trust-bar { flex-direction: column; gap: 15px; align-items: center; }
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
 
-    <div id="mainContent">
-        <!-- Notice Bar -->
-        <div class="scrolling-notice">
-            <div class="scrolling-text">📢 ইউটিউব প্রিমিয়াম ১ মাস মাত্র ৪০ টাকা! পেমেন্ট প্রুফ দিলেই ইমেইলে ইনস্ট্যান্ট ডেলিভারি। ⚡ আমাদের সব সার্ভিস ১০০% অথেন্টিক। 🚀</div>
-        </div>
+    <div id="maintenanceScreen">
+        <i class="fa-solid fa-gears"></i>
+        <h1 style="font-size: 2.5rem; margin-bottom: 10px;">সাইট আপডেট চলছে!</h1>
+        <p style="color: var(--text-muted); max-width: 500px; font-size: 1.1rem;">আমাদের সিস্টেমে কিছু রক্ষণাবেক্ষণের কাজ চলছে। আমরা খুব দ্রুত আবার লাইভে আসছি। সাময়িক অসুবিধার জন্য আন্তরিকভাবে দুঃখিত।</p>
+    </div>
 
-        <!-- Navbar -->
-        <nav class="bg-white shadow-sm sticky top-0 z-50">
-            <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-                <div class="flex items-center">
-                    <div class="bg-blue-600 p-2 rounded-xl mr-3 shadow-lg shadow-blue-200"><i class="fas fa-bolt text-white text-lg md:text-xl"></i></div>
-                    <div class="flex flex-col leading-none">
-                        <span class="logo-font text-lg md:text-2xl font-black text-gray-900 tracking-tighter uppercase">DIGITAL<span class="text-blue-600">HUB</span></span>
-                        <span class="text-[9px] md:text-[10px] font-bold text-gray-400 tracking-[0.2em] uppercase">Premium Shop</span>
+    <div id="siteContent">
+        <header>
+            <div class="container">
+                <nav>
+                    <a href="#" class="logo">
+                        <i class="fa-solid fa-bolt"></i> Digital Hub BD
+                    </a>
+                    <div class="nav-links">
+                        <a href="#">Home</a>
+                        <a href="#products">Catalog</a>
+                        <a href="#support">Support</a>
+                    </div>
+                    <div class="cart-btn" onclick="alert('আপনার কার্টটি বর্তমানে খালি আছে!')">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="container">
+                <h1>প্রিমিয়াম সাবস্ক্রিপশন<br><span>একদম সাশ্রয়ী মূল্যে</span></h1>
+                <p>আপনার ডিজিটাল লাইফকে করুন আরও সহজ ও প্রিমিয়াম। ১০০% ভেরিফাইড অ্যাকাউন্ট, ইনস্ট্যান্ট ডেলিভারি এবং সুরক্ষিত পেমেন্ট গ্যারান্টি।</p>
+                <a href="#products" class="btn btn-primary" style="max-width: 250px; margin: 0 auto;">ক্যাটালগ দেখুন</a>
+
+                <div class="trust-bar">
+                    <div class="trust-item"><i class="fa-solid fa-bolt"></i> দ্রুত ডেলিভারি</div>
+                    <div class="trust-item"><i class="fa-solid fa-shield-halved"></i> নিরাপদ পেমেন্ট</div>
+                    <div class="trust-item"><i class="fa-solid fa-headset"></i> ২৪/৭ কাস্টমার সাপোর্ট</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="products" class="products-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>সেরা প্রডাক্ট সমূহ</h2>
+                    <p>আপনার পছন্দের প্ল্যানটি বেছে নিন</p>
+                </div>
+
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="badge hot">Best Seller</div>
+                        <div class="card-icon icon-yt">
+                            <i class="fa-brands fa-youtube"></i>
+                        </div>
+                        <h3 class="product-title">YouTube Premium</h3>
+                        <p class="product-desc">১ মাস ইন্ডিভিজুয়াল প্ল্যান</p>
+                        <div class="price"><small>৳১৫০</small> ৳৪০</div>
+                        <ul class="features-list">
+                            <li><i class="fa-solid fa-check"></i> সম্পূর্ণ বিজ্ঞাপন মুক্ত ভিডিও</li>
+                            <li><i class="fa-solid fa-check"></i> ব্যাকগ্রাউন্ড প্লে সুবিধা</li>
+                            <li><i class="fa-solid fa-check"></i> ইউটিউব মিউজিক যুক্ত</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="openOrderModal('YouTube Premium', 40)">Buy Now</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="badge new">Sale</div>
+                        <div class="card-icon icon-spotify">
+                            <i class="fa-brands fa-spotify"></i>
+                        </div>
+                        <h3 class="product-title">Spotify Premium</h3>
+                        <p class="product-desc">৩ মাস ইন্ডিভিজুয়াল প্ল্যান</p>
+                        <div class="price"><small>৳৭৯৯</small> ৳১৯৯</div>
+                        <ul class="features-list">
+                            <li><i class="fa-solid fa-check"></i> কোনো বিজ্ঞাপন আসবে না</li>
+                            <li><i class="fa-solid fa-check"></i> অফলাইন ডাউনলোড সুবিধা</li>
+                            <li><i class="fa-solid fa-check"></i> হাই-কোয়ালিটি অডিও</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="openOrderModal('Spotify Premium', 199)">Buy Now</button>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="card-icon icon-netflix">
+                            <i class="fa-solid fa-n"></i>
+                        </div>
+                        <h3 class="product-title">Netflix Standard</h3>
+                        <p class="product-desc">১ মাস স্ক্রিন শেয়ারিং</p>
+                        <div class="price"><small>৳৩৫০</small> ৳১৪০</div>
+                        <ul class="features-list">
+                            <li><i class="fa-solid fa-check"></i> 1080p Full HD কোয়ালিটি</li>
+                            <li><i class="fa-solid fa-check"></i> নিজস্ব পিন লক প্রোফাইল</li>
+                            <li><i class="fa-solid fa-check"></i> আনলিমিটেড মুভি ও সিরিজ</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="openOrderModal('Netflix Standard', 140)">Buy Now</button>
+                    </div>
+
+                     <div class="product-card">
+                        <div class="card-icon icon-canva">
+                            <i class="fa-solid fa-palette"></i>
+                        </div>
+                        <h3 class="product-title">Canva Pro</h3>
+                        <p class="product-desc">লাইফটাইম টিম ইনভাইট</p>
+                        <div class="price"><small>৳৯৯৯</small> ৳৫০</div>
+                        <ul class="features-list">
+                            <li><i class="fa-solid fa-check"></i> সকল প্রিমিয়াম এলিমেন্ট আনলক</li>
+                            <li><i class="fa-solid fa-check"></i> ব্যাকগ্রাউন্ড রিমুভার সুবিধা</li>
+                            <li><i class="fa-solid fa-check"></i> আনলিমিটেড প্রিমিয়াম টেমপ্লেট</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="openOrderModal('Canva Pro', 50)">Buy Now</button>
                     </div>
                 </div>
-                <button onclick="toggleUserPanel()" class="bg-blue-50 text-blue-600 p-2 md:px-4 md:py-2 rounded-xl md:rounded-2xl hover:bg-blue-100 transition flex items-center gap-2">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span class="text-xs font-bold uppercase hidden md:block">Orders</span>
-                </button>
             </div>
-        </nav>
+        </section>
 
-        <!-- Fixed Category Section for Mobile -->
-        <div class="max-w-7xl mx-auto px-4 mt-6">
-            <div class="category-scroll flex gap-3 overflow-x-auto pb-4 pt-1 items-center">
-                <button id="btn-all" onclick="filterCategory('all')" class="cat-btn active flex-shrink-0 px-6 py-2.5 rounded-2xl bg-white border border-gray-100 text-xs md:text-sm font-bold transition shadow-sm whitespace-nowrap">All Items</button>
-                <button id="btn-subscription" onclick="filterCategory('subscription')" class="cat-btn flex-shrink-0 px-6 py-2.5 rounded-2xl bg-white border border-gray-100 text-xs md:text-sm font-bold transition shadow-sm whitespace-nowrap">Subscriptions</button>
-                <button id="btn-software" onclick="filterCategory('software')" class="cat-btn flex-shrink-0 px-6 py-2.5 rounded-2xl bg-white border border-gray-100 text-xs md:text-sm font-bold transition shadow-sm whitespace-nowrap">Software</button>
-                <button id="btn-giftcard" onclick="filterCategory('giftcard')" class="cat-btn flex-shrink-0 px-6 py-2.5 rounded-2xl bg-white border border-gray-100 text-xs md:text-sm font-bold transition shadow-sm whitespace-nowrap">Gift Cards</button>
+        <footer>
+            <div class="container">
+                <div class="logo" style="justify-content: center; margin-bottom: 20px;">
+                    <i class="fa-solid fa-bolt"></i> Digital Hub BD
+                </div>
+                <div class="footer-links">
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Refund Policy</a>
+                    <a href="#">Support</a>
+                </div>
+                <p class="copyright">&copy; 2026 Digital Hub BD. All rights reserved.</p>
             </div>
-        </div>
-
-        <!-- Product Grid -->
-        <main class="max-w-7xl mx-auto px-4 py-4 md:py-8">
-            <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-8">
-                <!-- Products dynamically loaded -->
-            </div>
-        </main>
+        </footer>
     </div>
 
-    <!-- User Panel -->
-    <div id="userPanel" class="fixed top-0 right-0 h-full w-[85%] md:w-80 bg-white shadow-2xl z-[3000] p-6 overflow-y-auto border-l border-gray-100">
-        <div class="flex justify-between items-center mb-8">
-            <h3 class="text-xl font-bold logo-font text-blue-600 uppercase">My Orders</h3>
-            <button onclick="toggleUserPanel()" class="text-gray-400 text-3xl">&times;</button>
-        </div>
-        <div id="orderHistoryList" class="space-y-4"></div>
-    </div>
-
-    <!-- Order Modal -->
-    <div id="orderModal" class="modal-overlay">
-        <div class="bg-white p-6 md:p-8 rounded-[32px] shadow-2xl max-w-sm w-full relative">
-            <button onclick="closeModal()" class="absolute top-5 right-5 text-gray-400 text-2xl">&times;</button>
-            <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-2 text-center" id="modalProdTitle">Order Now</h2>
-            <p class="text-[10px] text-gray-400 text-center mb-6 font-bold uppercase tracking-widest">Enter details for delivery</p>
-            <input type="email" id="orderEmail" placeholder="example@gmail.com" class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl px-5 py-4 mb-4 outline-none focus:border-blue-600 font-semibold">
-            <button onclick="submitOrder()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-bold shadow-lg shadow-green-100 hover:bg-green-600 transition">CONFIRM & WHATSAPP</button>
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="margin-bottom: 10px;">অর্ডার কনফার্ম করুন</h3>
+            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem;">
+                প্রোডাক্ট: <strong id="modalItemName" style="color: white;">-</strong><br>
+                মূল্য: <strong id="modalItemPrice" style="color: #6366f1;">-</strong><br>
+                অর্ডার আইডি: <span id="modalOrderId" style="color: #ec4899; font-weight: bold;">-</span>
+            </p>
+            
+            <input type="email" id="customerEmail" placeholder="আপনার ডেলিভারি ইমেইল লিখুন" class="modal-input" required>
+            
+            <button class="btn btn-success" onclick="sendWhatsAppOrder()">
+                <i class="fa-brands fa-whatsapp"></i> কনফার্ম এবং হোয়াটসঅ্যাপ করুন
+            </button>
         </div>
     </div>
 
     <script>
-        let orders = JSON.parse(localStorage.getItem('myOrders')) || [];
+        // ===================================================
+        // 🛠️ MAINTENANCE MODE TOGGLE (রক্ষণাবেক্ষণ মোড)
+        // ===================================================
+        // সাইট বন্ধ করে নোটিশ দেখাতে চাইলে true করো, চালু করতে false করো।
+        const isMaintenanceMode = true; 
+        // ===================================================
 
-        const products = [
-            { id: 1, name: 'YouTube Premium', price: 40, category: 'subscription', stock: true, img: 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png', badge: 'HOT' },
-            { id: 2, name: 'Canva Pro', price: 50, category: 'subscription', stock: true, img: 'https://img.icons8.com/color/512/canva.png', badge: '' },
-            { id: 3, name: 'Windows 11 Key', price: 350, category: 'software', stock: false, img: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg', badge: '' },
-            { id: 4, name: 'Steam Gift Card', price: 650, category: 'giftcard', stock: false, img: 'https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg', badge: '' }
-        ];
-
-        window.onload = () => {
-            renderProducts('all');
-            renderOrders();
-        };
-
-        function toggleUserPanel() { document.getElementById('userPanel').classList.toggle('open'); }
-
-        function filterCategory(cat) {
-            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('btn-' + cat).classList.add('active');
-            renderProducts(cat);
+        // Check Maintenance Status immediately on load
+        if (isMaintenanceMode) {
+            document.getElementById('maintenanceScreen').style.display = 'flex';
+            document.getElementById('siteContent').style.display = 'none';
         }
 
-        function renderProducts(filter) {
-            const grid = document.getElementById('productGrid');
-            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+        let currentProductName = "";
+        let currentProductPrice = 0;
+        let currentOrderId = "";
+
+        const modal = document.getElementById('checkoutModal');
+        const modalItemName = document.getElementById('modalItemName');
+        const modalItemPrice = document.getElementById('modalItemPrice');
+        const modalOrderId = document.getElementById('modalOrderId');
+        const cartCountElement = document.getElementById('cartCount');
+        let cartCount = 0;
+
+        function openOrderModal(productName, price) {
+            currentProductName = productName;
+            currentProductPrice = price;
+            currentOrderId = 'DHB-' + Math.floor(100000 + Math.random() * 900000);
+
+            modalItemName.innerText = productName;
+            modalItemPrice.innerText = '৳' + price;
+            modalOrderId.innerText = currentOrderId;
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.getElementById('customerEmail').value = "";
+        }
+
+        function sendWhatsAppOrder() {
+            const email = document.getElementById('customerEmail').value;
             
-            grid.innerHTML = filtered.map(p => `
-                <div class="product-card bg-white p-4 md:p-6 rounded-3xl border border-gray-100 shadow-sm flex flex-col relative ${!p.stock ? 'stock-out' : ''}">
-                    ${p.badge ? `<div class="absolute top-2 left-2 bg-red-600 text-white text-[8px] md:text-[10px] px-2 py-0.5 rounded font-bold">${p.badge}</div>` : ''}
-                    ${!p.stock ? `<span class="stock-out-badge">STOCK OUT</span>` : ''}
-                    <img src="${p.img}" class="product-img mb-3 md:mb-4 mx-auto">
-                    <h4 class="font-bold text-center text-xs md:text-base mb-1">${p.name}</h4>
-                    <p class="text-blue-600 font-black text-center text-lg md:text-xl">৳${p.price}</p>
-                    <button ${!p.stock ? 'disabled' : ''} onclick="openOrderModal('${p.name}', ${p.price})" 
-                        class="w-full mt-3 md:mt-4 ${p.stock ? 'bg-blue-600' : 'bg-gray-400'} text-white py-2.5 md:py-3 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-bold uppercase transition">
-                        ${p.stock ? 'Buy Now' : 'Out of Stock'}
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        let currentProduct = "", currentPrice = 0;
-        function openOrderModal(name, price) {
-            currentProduct = name; currentPrice = price;
-            document.getElementById('modalProdTitle').innerText = name;
-            document.getElementById('orderModal').style.display = 'flex';
-        }
-        function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
-
-        function submitOrder() {
-            const email = document.getElementById('orderEmail').value;
-            if (!email.includes('@')) { alert("Valid email required!"); return; }
-
-            const orderId = 'DHB' + Math.floor(100000 + Math.random() * 900000);
-            const newOrder = { 
-                id: orderId, 
-                product: currentProduct, 
-                price: currentPrice, 
-                date: new Date().toLocaleDateString() 
-            };
-
-            orders.unshift(newOrder);
-            localStorage.setItem('myOrders', JSON.stringify(orders));
-            renderOrders();
-            closeModal();
-            toggleUserPanel();
-            
-            const whatsappNumber = "8801XXXXXXXXX"; 
-            const msg = `👋 *New Order*\n🆔 ID: ${orderId}\n📦 Product: ${currentProduct}\n📧 Email: ${email}\n💰 Price: ${currentPrice} BDT`;
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function renderOrders() {
-            const container = document.getElementById('orderHistoryList');
-            if (orders.length === 0) {
-                container.innerHTML = `<p class="text-gray-400 text-center text-xs italic">No orders found.</p>`;
+            if (!email.includes('@') || email.trim() === "") {
+                alert("দয়া করে একটি সঠিক ইমেইল এড্রেস দিন!");
                 return;
             }
-            container.innerHTML = orders.map(o => `
-                <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 shadow-sm">
-                    <div class="flex justify-between mb-1">
-                        <span class="text-[10px] font-black text-blue-600 bg-blue-50 px-2 py-0.5 rounded">#${o.id}</span>
-                        <span class="text-[9px] text-gray-400 font-bold uppercase">${o.date}</span>
-                    </div>
-                    <p class="text-sm font-bold text-gray-800">${o.product}</p>
-                    <p class="text-xs font-bold text-blue-500 mt-0.5">৳${o.price}</p>
-                </div>
-            `).join('');
+
+            cartCount++;
+            cartCountElement.innerText = cartCount;
+
+            const whatsappNumber = "8801XXXXXXXXX"; // তোমার আসল হোয়াটসঅ্যাপ নাম্বারটি এখানে বসাবে
+            
+            const message = `👋 *NEW ORDER PLACED*\n\n` +
+                            `🆔 *Order ID:* ${currentOrderId}\n` +
+                            `📦 *Product:* ${currentProductName}\n` +
+                            `💰 *Price:* ৳${currentProductPrice}\n` +
+                            `📧 *Delivery Email:* ${email}\n\n` +
+                            `⚡ _দয়া করে আপনার পেমেন্ট স্ক্রিনশটটি এই মেসেজের সাথে পাঠান।_`;
+
+            const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+            
+            closeModal();
         }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
